@@ -1,0 +1,17 @@
+#signature properties
+
+#client_side
+security:
+  alias: 1
+  password: qwerty
+  p12FileName: certificate.p12
+  keyStoreInstanceName: PKCS12
+#both
+  algorithm: SHA256withRSA
+
+#server_side
+  fileName: certificate.crt
+  name: X.509
+
+server:
+  port: 8081
