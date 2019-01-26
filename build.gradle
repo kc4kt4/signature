@@ -32,13 +32,13 @@ ext {
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-configuration-processor'
-    compileOnly 'org.projectlombok:lombok'
+    implementation 'org.hibernate:hibernate-validator:6.0.13.Final'
     providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    compileOnly 'org.projectlombok:lombok'
 
     compile group: 'io.swagger', name: 'swagger-annotations', version: '1.5.21'
     springFoxArtifacts.each {
         artifact -> compile("io.springfox:$artifact:$springFoxVersion")
     }
-    compile group: 'org.hibernate', name: 'hibernate-validator', version: '6.0.13.Final'
 }
