@@ -1,10 +1,10 @@
 package ru.kc4kt4.signature.service.clientside;
 
-import com.sun.xml.internal.txw2.IllegalSignatureException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.kc4kt4.signature.config.properties.SignatureProperties;
+import ru.kc4kt4.signature.exception.IllegalSignatureException;
 
 import java.nio.charset.StandardCharsets;
 import java.security.KeyStore;
@@ -30,19 +30,16 @@ public class SignatureServiceOnClient {
      */
     public String createSignature(String request) {
         try {
-            KeyStore keystore = KeyStore.getInstance(signatureProperties.getKeyStoreInstanceName());
-            keystore.load(SignatureServiceOnClient.class.getClassLoader()
-                            .getResourceAsStream(signatureProperties.getP12FileName()),
-                    signatureProperties.getPassword().toCharArray());
-            PrivateKey key = (PrivateKey) keystore.getKey(signatureProperties.getAlias(),
-                    signatureProperties.getPassword().toCharArray());
+            KeyStore keystore = getKeyStore();
+
+            PrivateKey key = getPrivateKey(keystore);
 
             Signature sig = Signature.getInstance(signatureProperties.getAlgorithm());
             sig.initSign(key);
 
             byte[] bytes = request.getBytes(StandardCharsets.UTF_8);
-
             sig.update(bytes);
+
             byte[] sign = sig.sign();
 
             return Base64.getEncoder().encodeToString(sign);
@@ -51,5 +48,18 @@ public class SignatureServiceOnClient {
             log.error("Error with creating signature", e);
             throw new IllegalSignatureException("Something went wrong!");
         }
+    }
+
+    private KeyStore getKeyStore() throws Exception {
+        KeyStore keystore = KeyStore.getInstance(signatureProperties.getKeyStoreInstanceName());
+        keystore.load(SignatureServiceOnClient.class.getClassLoader()
+                              .getResourceAsStream(signatureProperties.getP12FileName()),
+                      signatureProperties.getPassword().toCharArray());
+        return keystore;
+    }
+
+    private PrivateKey getPrivateKey(KeyStore keystore) throws Exception {
+        return (PrivateKey) keystore.getKey(signatureProperties.getAlias(),
+                                            signatureProperties.getPassword().toCharArray());
     }
 }

@@ -43,6 +43,7 @@ public class SignatureServiceOnServerSide {
             InputStream is = SignatureServiceOnServerSide.class
                     .getClassLoader()
                     .getResourceAsStream(signatureProperties.getFileName());
+
             assert is != null;
 
             InputStream certInputStream = new BufferedInputStream(is);

@@ -37,8 +37,8 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     compileOnly 'org.projectlombok:lombok'
 
-    compile group: 'io.swagger', name: 'swagger-annotations', version: '1.5.21'
+    implementation 'io.swagger:swagger-annotations:1.5.21'
     springFoxArtifacts.each {
-        artifact -> compile("io.springfox:$artifact:$springFoxVersion")
+        artifact -> implementation ("io.springfox:$artifact:$springFoxVersion")
     }
 }
