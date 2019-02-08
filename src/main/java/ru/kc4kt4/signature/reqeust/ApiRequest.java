@@ -5,6 +5,9 @@ import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
 
+/**
+ * The type Api request.
+ */
 @Data
 public class ApiRequest {
 

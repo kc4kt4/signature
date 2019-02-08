@@ -18,6 +18,9 @@ import ru.kc4kt4.signature.response.CreateSignatureResponse;
 
 import javax.validation.Valid;
 
+/**
+ * The type Signature controller.
+ */
 @Api("Api: signature")
 @JsonRestController
 @RequestMapping(value = "/signature",
@@ -31,6 +34,12 @@ public class SignatureController {
     @Autowired
     private VerifySignatureHandler verifySignatureHandler;
 
+    /**
+     * Verify signature http status.
+     *
+     * @param apiRequest the api request
+     * @return the http status
+     */
     @ApiOperation(value = "Проверить подпись")
     @RequestMapping(value = "/verify", method = RequestMethod.POST)
     @ApiImplicitParams({
@@ -43,6 +52,12 @@ public class SignatureController {
         return verifySignatureHandler.verifySignature(apiRequest);
     }
 
+    /**
+     * Create signature create signature response.
+     *
+     * @param apiRequest the api request
+     * @return the create signature response
+     */
     @ApiOperation(value = "Сформировать подпись")
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public CreateSignatureResponse createSignature(@Valid @RequestBody ApiRequest apiRequest) {

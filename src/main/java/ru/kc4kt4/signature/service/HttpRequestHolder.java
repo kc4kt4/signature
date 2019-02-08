@@ -10,6 +10,9 @@ import org.springframework.web.context.request.RequestContextHolder;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Optional;
 
+/**
+ * The type Http request holder.
+ */
 @Component
 public class HttpRequestHolder {
 
@@ -17,6 +20,11 @@ public class HttpRequestHolder {
 
     private HttpServletRequest httpServletRequest;
 
+    /**
+     * Gets signature.
+     *
+     * @return the signature
+     */
     public String getSignature() {
         return getHttpRequestHeader(SIGNATURE);
     }

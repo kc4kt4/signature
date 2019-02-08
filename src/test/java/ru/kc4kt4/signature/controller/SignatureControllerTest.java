@@ -18,6 +18,9 @@ import java.net.URI;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+/**
+ * The type Signature controller test.
+ */
 public class SignatureControllerTest  extends AbstractTest {
     private final static String HOST_SIGNATURE = "http://localhost:8081/signature/";
     private final static String CREATE = "create";
@@ -28,6 +31,9 @@ public class SignatureControllerTest  extends AbstractTest {
     @Autowired
     private RestTemplate restTemplate;
 
+    /**
+     * Create signature test.
+     */
     @Test
     public void createSignatureTest() {
         ResponseEntity<CreateSignatureResponse> response = restTemplate.exchange(HOST_SIGNATURE + CREATE,
@@ -40,6 +46,9 @@ public class SignatureControllerTest  extends AbstractTest {
         assertEquals(SIGNATURE, response.getBody().getSignature());
     }
 
+    /**
+     * Verify signature test.
+     */
     @Test
     public void verifySignatureTest() {
         HttpHeaders headers = createHeaders();

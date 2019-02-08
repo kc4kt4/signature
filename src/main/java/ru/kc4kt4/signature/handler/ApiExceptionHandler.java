@@ -12,10 +12,20 @@ import ru.kc4kt4.signature.response.ErrorResponse;
 
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * The type Api exception handler.
+ */
 @Slf4j
 @ControllerAdvice(annotations = JsonRestController.class)
 public class ApiExceptionHandler {
 
+    /**
+     * Handle exception error response.
+     *
+     * @param e the exception
+     * @param httpResponse the http response
+     * @return the error response
+     */
     @ExceptionHandler(IllegalSignatureException.class)
     @ResponseBody
     public ErrorResponse handleException(IllegalSignatureException e, HttpServletResponse httpResponse) {
@@ -24,6 +34,13 @@ public class ApiExceptionHandler {
         return new ErrorResponse(HttpStatus.BAD_REQUEST.value(), e.getMessage());
     }
 
+    /**
+     * Handle exception error response.
+     *
+     * @param e the exception
+     * @param httpResponse the http response
+     * @return the error response
+     */
     @ExceptionHandler(InternalServerException.class)
     @ResponseBody
     public ErrorResponse handleException(InternalServerException e, HttpServletResponse httpResponse) {

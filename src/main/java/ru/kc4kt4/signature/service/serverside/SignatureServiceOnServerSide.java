@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.kc4kt4.signature.config.properties.SignatureProperties;
+import ru.kc4kt4.signature.exception.IllegalSignatureException;
 import ru.kc4kt4.signature.exception.InternalServerException;
 import ru.kc4kt4.signature.service.HttpRequestHolder;
 
@@ -15,6 +16,9 @@ import java.security.cert.Certificate;
 import java.security.cert.CertificateFactory;
 import java.util.Base64;
 
+/**
+ * The type Signature service on server side.
+ */
 @Service
 @Slf4j
 public class SignatureServiceOnServerSide {
@@ -24,6 +28,11 @@ public class SignatureServiceOnServerSide {
     @Autowired
     private HttpRequestHolder httpRequestHolder;
 
+    /**
+     * Verify signature.
+     *
+     * @param requestAsString the request as string
+     */
     public void verifySignature(String requestAsString) {
         String signature = httpRequestHolder.getSignature();
 
@@ -50,13 +59,13 @@ public class SignatureServiceOnServerSide {
             boolean verified = signatureVerified.verify(decode);
 
             if (!verified) {
-                throw new IllegalStateException("Error while handle signature");
+                throw new IllegalSignatureException("Error while handle signature");
             }
-        } catch (IllegalStateException e) {
-            log.error(e.getMessage(), e);
+        } catch (IllegalSignatureException e) {
+            log.error("Error with verifying signature", e);
             throw e;
         } catch (Exception ex) {
-            log.error(ex.getMessage(), ex);
+            log.error("Unknown error while verify signature processing", ex);
             throw new InternalServerException("Something went wrong!");
         }
     }

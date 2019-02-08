@@ -8,6 +8,9 @@ import org.springframework.validation.annotation.Validated;
 
 import javax.validation.constraints.NotBlank;
 
+/**
+ * The type Signature properties.
+ */
 @Component
 @ConfigurationProperties(prefix = "security")
 @PropertySource("classpath:application.yml")

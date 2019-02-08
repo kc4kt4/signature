@@ -6,6 +6,9 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
+/**
+ * The type Api error.
+ */
 @Getter
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @NoArgsConstructor
@@ -16,6 +19,12 @@ public class ApiError implements Serializable {
     private String code;
     private String transcription;
 
+    /**
+     * Instantiates a new Api error.
+     *
+     * @param code the code
+     * @param transcription the transcription
+     */
     public ApiError(int code, String transcription) {
         this.code = String.valueOf(code);
         this.transcription = transcription;

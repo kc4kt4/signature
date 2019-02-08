@@ -12,6 +12,9 @@ import java.security.PrivateKey;
 import java.security.Signature;
 import java.util.Base64;
 
+/**
+ * The type Signature service on client.
+ */
 @Slf4j
 @Service
 public class SignatureServiceOnClient {
@@ -19,6 +22,12 @@ public class SignatureServiceOnClient {
     @Autowired
     private SignatureProperties signatureProperties;
 
+    /**
+     * Create signature string.
+     *
+     * @param request the request
+     * @return the string
+     */
     public String createSignature(String request) {
         try {
             KeyStore keystore = KeyStore.getInstance(signatureProperties.getKeyStoreInstanceName());
@@ -39,7 +48,7 @@ public class SignatureServiceOnClient {
             return Base64.getEncoder().encodeToString(sign);
 
         } catch (Exception e) {
-            log.error(e.getMessage(), e);
+            log.error("Error with creating signature", e);
             throw new IllegalSignatureException("Something went wrong!");
         }
     }
